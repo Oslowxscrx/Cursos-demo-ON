@@ -121,6 +121,7 @@ class Gradebook {
         this.assignments.forEach((assignment) => {
             let currentGradebooksetup = gradebookSetups.filter((item) => item.value === assignment.gradebooksetup)[0];
             let currentStudent = students.filter((student) => student.dni === assignment.student)[0];
+            // instanciando un objeto - invocando a los metodos
             let rowGradebook = {
                 //Course
                 course: currentGradebooksetup.course,
@@ -141,8 +142,23 @@ class Gradebook {
                 gradebooksetup: assignment.gradebooksetup,
                 grade: assignment.grade
             };
+            // lee y añade los objetos de rowGradebook
             gradebookDTOs.push(rowGradebook);
         });
         return gradebookDTOs;
     }
+}
+function generateReport() {
+    let reportGrades = new Gradebook(students, activities, gradebookSetups, assignments, teachers);
+    let rowReport = reportGrades.buildGradebookDTOFromAssignment();
+    let reporTable = document.getElementById("report");
+    rowReport.forEach((itemDTO) => {
+        let tr;
+        let td;
+        tr = reporTable.insertRow(0);
+        td = tr.insertCell(0);
+        td.innerHTML ? itemDTO.course : ;
+        td = tr.insertCell(1),
+            td.innerHTML = itemDTO.student;
+    });
 }

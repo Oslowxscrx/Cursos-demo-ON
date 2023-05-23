@@ -172,8 +172,7 @@ class Gradebook {
                  public teacher: Teacher[]){
        
 
-    }
-    ;
+    };
 
     public buildGradebookDTOFromAssignment(): GradebookDTO[] {
         let gradebookDTOs: GradebookDTO[] = [];
@@ -184,26 +183,32 @@ class Gradebook {
                 let currentGradebooksetup = gradebookSetups.filter((item)=>item.value===assignment.gradebooksetup)[0];
                 let currentStudent = students.filter( (student)=> student.dni === assignment.student)[0];
 
-                let rowGradebook:GradebookDTO = {
+                // instanciando un objeto - invocando a los metodos
+                let rowGradebook:GradebookDTO = { 
                     //Course
                     course:currentGradebooksetup.course,
+
                     //Student
                     studentName: currentStudent.fullName,
                     lastName: "",
                     level: currentStudent.level,
                     dni: assignment.student,
                     fullName: currentStudent.fullName,
+
                     //GradebookSetup
                     value: "",
                     activity: "",
                     maximun_grade: 0,
+
                     //Activity
                     name: "",
+
                     //Assignment
                     student: assignment.student,
                     gradebooksetup: assignment.gradebooksetup,
                     grade: assignment.grade
                 }
+                // lee y añade los objetos de rowGradebook
                 gradebookDTOs.push(rowGradebook);
             }
         );
@@ -211,4 +216,28 @@ class Gradebook {
         return gradebookDTOs;
     }
 
+}
+
+function generateReport():void{
+    let reportGrades: Gradebook = new Gradebook(
+        students, 
+        activities, 
+        gradebookSetups, 
+        assignments, 
+        teachers
+
+    );
+    let rowReport: GradebookDTO[] = reportGrades.buildGradebookDTOFromAssignment();
+    let reporTable: HTMLTableElement = document.getElementById("report") as HTMLTableElement;
+    rowReport.forEach((itemDTO) => {
+        let tr: HTMLTableRowElement;
+        let td: HTMLTableCellElement;
+        tr = reporTable.insertRow(0);
+        td = tr.insertCell(0);
+        td.innerHTML ? itemDTO.course;
+        td= tr.insertCell(1),
+        td.innerHTML = itemDTO.student;
+
+
+    }) 
 }
