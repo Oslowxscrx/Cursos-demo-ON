@@ -59,8 +59,7 @@ function addGradebookSetup(): void{
         value: readFromHtml("gradebook_value"),
         course: readFromHtml("gradebook_course"),
         activity: readFromHtml("gradebook_activity"),
-        maximun_grade: parseInt(readFromHtml("gradebook_maximun_grade")),
-        gradebooksetup: ""
+        maximun_grade: parseInt(readFromHtml("gradebook_maximun_grade"))
     } 
     gradebookSetups.push(currentGradebookSetup);
     console.table(gradebookSetups);
@@ -165,15 +164,16 @@ function initSelect():void{
 initSelect()
 
 class Gradebook {
+    // se inicializa de una manera mas rapida, solo desde el constructor
+    constructor( public students: Student[], 
+                 public activities: Activity[], 
+                 public gradebookSetups: GradebookSetup[], 
+                 public assignments: Assignment[],
+                 public teacher: Teacher[]){
+       
 
-    constructor(
-        public students: Student[],
-        public activities: Activity[],
-        public gradebookSetups: GradebookSetup[],
-        public assignments: Assignment[],
-        public teachers?: Teacher[],
-        )
-    {};
+    }
+    ;
 
     public buildGradebookDTOFromAssignment(): GradebookDTO[] {
         let gradebookDTOs: GradebookDTO[] = [];
